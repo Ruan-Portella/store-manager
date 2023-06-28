@@ -10,4 +10,10 @@ const findProductById = async (id) => {
     return product[0];
 };
 
-module.exports = { getAllProducts, findProductById };
+const addProduct = async (name) => {
+    const [{ insertId }] = await connection
+    .execute('INSERT INTO products (name) VALUES (?)', [name]);
+    return insertId;
+};
+
+module.exports = { getAllProducts, findProductById, addProduct };
