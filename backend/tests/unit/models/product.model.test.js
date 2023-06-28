@@ -8,7 +8,7 @@ const { allProducts } = require('../mocks/products.mock');
 const { expect } = chai;
 chai.use(sinonChai);
 
-describe('Testa a Camada Model', function () {
+describe('Testa a Camada Model na Rota Product', function () {
     beforeEach(function () {
         sinon.restore();
     });
