@@ -30,4 +30,10 @@ describe('Testa a Camada Service na Rota Product', function () {
         const product = await service.findProductById(1000);
         expect(product).to.be.deep.equal({ message: 'Product not found' });
     });
+
+    it('Verifica se o retorno da função addProduct no service é o id correto', async function () {
+        sinon.stub(models, 'addProduct').resolves(4);
+        const product = await service.addProduct('Produto Teste');
+        expect(product).to.be.deep.equal({ id: 4, name: 'Produto Teste' });
+    });
 });

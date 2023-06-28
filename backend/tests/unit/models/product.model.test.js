@@ -30,4 +30,10 @@ describe('Testa a Camada Model na Rota Product', function () {
         const product = await models.findProductById(1000);
         expect(product).to.be.deep.equal(null);
     });
+
+    it('Verifica se o retorno da função addProduct no model é o id correto', async function () {
+        sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+        const product = await models.addProduct('Produto Teste');
+        expect(product).to.be.deep.equal(4);
+    });
 });

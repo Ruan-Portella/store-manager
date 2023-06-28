@@ -57,4 +57,19 @@ describe('Testa a Camada Controller na Rota Product', function () {
         expect(res.status).to.have.been.calledWith(404);
         expect(res.json).to.be.have.been.calledWith({ type: 404, message: 'Product not found' });
     });
+
+    it('Verifica se o retorno da função addProduct no controller é o id correto', async function () {
+        const req = {
+            body: { name: 'Produto Teste' },
+        };
+        const res = {
+            status: sinon.stub().returnsThis(),
+            json: sinon.stub(),
+        };
+
+        sinon.stub(service, 'addProduct').resolves(4);
+        await controllers.addProduct(req, res);
+        expect(res.status).to.have.been.calledWith(201);
+        expect(res.json).to.be.have.been.calledWith(4);
+    });
 });
