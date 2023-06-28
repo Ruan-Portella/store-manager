@@ -57,4 +57,19 @@ describe('Testa a Camada Controller na Rota Sales', function () {
         expect(res.status).to.have.been.calledWith(404);
         expect(res.json).to.be.have.been.calledWith({ type: 404, message: 'Product not found' });
     });
+
+    it('Verifica se o retorno da função addSale no controller é o produto correto', async function () {
+        const req = {
+            body: { productId: 1, quantity: 2 },
+        };
+        const res = {
+            status: sinon.stub().returnsThis(),
+            json: sinon.stub(),
+        };
+
+        sinon.stub(service, 'addSale').resolves(allSales[0]);
+        await controllers.addSale(req, res);
+        expect(res.status).to.have.been.calledWith(201);
+        expect(res.json).to.be.have.been.calledWith(allSales[0]);
+    });
 });

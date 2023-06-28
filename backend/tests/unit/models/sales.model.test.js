@@ -30,4 +30,16 @@ describe('Testa a Camada Model na rota Sales', function () {
         const product = await models.findSalesById(1000);
         expect(product).to.be.deep.equal(null);
     });
+
+    it('Verifica se o retorno da função addSaleTimer no model é o produto correto', async function () {
+        sinon.stub(connection, 'execute').resolves([{ insertId: 5 }]);
+        const result = await models.addSaleTime();
+        expect(result).to.be.deep.equal(5);
+    });
+
+    it('Verifica se é addSale retorna o produto adicionado', async function () {
+        sinon.stub(connection, 'execute').resolves([{ insertId: 5 }]);
+        const result = await models.addSale(5, 2, 10);
+        expect(result).to.be.deep.equal(5);
+    });
 });

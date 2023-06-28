@@ -12,4 +12,10 @@ const findSalesById = async (req, res) => {
     return res.status(200).json(Sales);
 };
 
-module.exports = { getAllSales, findSalesById };
+const addSale = async (req, res) => {
+    const itensSold = req.body;
+    const newSale = await sales.addSale(itensSold);
+    return res.status(201).json(newSale);
+};
+
+module.exports = { getAllSales, findSalesById, addSale };

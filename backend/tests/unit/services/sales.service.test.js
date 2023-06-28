@@ -30,4 +30,12 @@ describe('Testa a Camada Service na Rota Sales', function () {
         const product = await service.findSalesById(1000);
         expect(product).to.be.deep.equal({ message: 'Sale not found' });
     });
+
+    it('Verifica se o retorno da função addProduct no service é o id correto', async function () {
+        sinon.stub(models, 'addSaleTime').resolves(6);
+        sinon.stub(models, 'addSale').resolves();
+
+        const product = await service.addSale([{ productId: 2, quantity: 2 }]);
+        expect(product).to.be.deep.equal({ id: 6, itemsSold: [{ productId: 2, quantity: 2 }] });
+    });
 });

@@ -11,4 +11,14 @@ const findSalesById = async (id) => {
     return Sales;
 };
 
-module.exports = { getAllSales, findSalesById };
+const addSale = async (itemsSold) => {
+    const saleId = await model.addSaleTime();
+
+    itemsSold.map(async (item) => { 
+        await model.addSale(saleId, item.productId, item.quantity);
+    });
+
+    return { id: saleId, itemsSold };
+};
+
+module.exports = { getAllSales, findSalesById, addSale };
