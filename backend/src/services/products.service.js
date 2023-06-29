@@ -30,4 +30,16 @@ const deleteProduct = async (id) => {
     return {};
 };
 
-module.exports = { getAllProducts, findProductById, addProduct, editProduct, deleteProduct };
+const findByQueryName = async (q) => {
+    const allProducts = await getAllProducts();
+    const filteredProducts = allProducts.filter((product) => product.name
+    .toUpperCase().includes(q.toUpperCase()));
+    return filteredProducts;
+  };
+
+module.exports = { getAllProducts,
+findProductById,
+addProduct, 
+    editProduct,
+deleteProduct,
+findByQueryName };
