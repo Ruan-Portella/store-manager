@@ -42,4 +42,28 @@ describe('Testa a Camada Model na rota Sales', function () {
         const result = await models.addSale(5, 2, 10);
         expect(result).to.be.deep.equal(5);
     });
+
+    it('Verifica se o retorno da função findSaleByIdForEdit no model é o produto correto', async function () {
+        sinon.stub(connection, 'execute').resolves([allSales[0]]);
+        const product = await models.findSalesByIdForEdit(1);
+        expect(product).to.be.deep.equal(allSales[0]);
+    });
+
+    it('Verifica se é possivel deletar o tempo de um produto', async function () {
+        sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+        const result = await models.deleteSaleTime(1);
+        expect(result).to.be.deep.equal({ affectedRows: 1 });
+    });
+
+    it('Verifica se é possivel deletar um produto', async function () {
+        sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+        const result = await models.deleteSale(1);
+        expect(result).to.be.deep.equal({ affectedRows: 1 });
+    });
+
+    it('Verifica se é possivel editar um produto', async function () {
+        sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+        const result = await models.editSale(1, 2, 10);
+        expect(result).to.be.deep.equal({ affectedRows: 1 });
+    });
 });

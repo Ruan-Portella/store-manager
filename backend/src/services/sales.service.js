@@ -29,4 +29,19 @@ const deleteSale = async (id) => {
     return Sales;
 };
 
-module.exports = { getAllSales, findSalesById, addSale, deleteSale };
+const editSale = async ({ saleId, productId, quantity }) => {
+    await model.editSale({ saleId, productId, quantity });
+  
+    const updatedSale = await model.findSalesById(saleId);
+
+    let saleEdited;
+
+    if (updatedSale instanceof Array) {
+      saleEdited = { saleId, ...updatedSale.find((s) => s.productId === productId) };
+    } else { 
+      saleEdited = { saleId, ...updatedSale };
+    }
+    return saleEdited;
+  };
+
+module.exports = { getAllSales, findSalesById, addSale, deleteSale, editSale };

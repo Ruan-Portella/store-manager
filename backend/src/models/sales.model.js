@@ -23,6 +23,19 @@ const findSalesById = async (id) => {
     return sales;
 };
 
+const findSalesByIdForEdit = async (id) => {
+    const [sales] = await connection.execute(
+        `SELECT sales.date AS date, prod.product_id AS productId, prod.quantity as quantity, 
+        sales.id AS saleId
+    FROM StoreManager.sales AS sales
+    JOIN StoreManager.sales_products AS prod ON sales.id = prod.sale_id
+    WHERE sales.id = ?
+    ORDER BY sales.id, productId`,
+        [id],
+    );
+    return sales;
+};
+
 const addSaleTime = async () => {
     const [{ insertId }] = await connection
         .execute('INSERT INTO sales (date) VALUES (NOW())');
@@ -48,4 +61,18 @@ const deleteSale = async (id) => {
     return result;
 };
 
-module.exports = { getAllSales, findSalesById, addSaleTime, addSale, deleteSaleTime, deleteSale };
+const editSale = async ({ saleId, productId, quantity }) => {
+    const [result] = await connection.execute(`UPDATE sales_products SET quantity = ? 
+    WHERE sale_id = ? AND product_id = ?`, [quantity, saleId, productId]);
+  
+    return result;
+  };
+
+module.exports = { getAllSales,
+findSalesById,
+addSaleTime, 
+    addSale,
+deleteSaleTime,
+deleteSale,
+findSalesByIdForEdit,
+editSale };

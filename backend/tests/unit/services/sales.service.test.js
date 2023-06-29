@@ -38,4 +38,38 @@ describe('Testa a Camada Service na Rota Sales', function () {
         const product = await service.addSale([{ productId: 2, quantity: 2 }]);
         expect(product).to.be.deep.equal({ id: 6, itemsSold: [{ productId: 2, quantity: 2 }] });
     });
+
+    it('Verifica se é possivel deletar o tempo de um produto', async function () {
+        sinon.stub(models, 'deleteSaleTime').resolves({ affectedRows: 1 });
+        sinon.stub(models, 'deleteSale').resolves({ affectedRows: 1 });
+        sinon.stub(models, 'findSalesById').resolves(allSales[0]);
+        const result = await service.deleteSale(1);
+        expect(result).to.be.deep.equal({ date: '2023-06-28 18:56:05',
+        productId: 1,
+        quantity: 5,
+        saleId: 1 });
+    });
+
+    it('Verifica se é possivel editar um produto', async function () {
+        sinon.stub(models, 'findSalesById').resolves(allSales[0]);
+        sinon.stub(models, 'editSale').resolves(1, 2, 2);
+
+        const result = await service.editSale(1, [{ productId: 2, quantity: 2 }]);
+        expect(result).to.be.deep.equal(
+            { date: '2023-06-28 18:56:05',
+         productId: 1,
+         quantity: 5,
+         saleId: 1 },
+);
+    });
+
+    it('Verifica se é possivel editar um produto e retorna um array', async function () {
+        sinon.stub(models, 'findSalesById').resolves(allSales);
+        sinon.stub(models, 'editSale').resolves(1, 1, 2);
+
+        const result = await service.editSale(1, 1, 2);
+        expect(result).to.be.deep.equal(
+           { saleId: undefined },
+);
+    });
 });

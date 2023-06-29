@@ -25,4 +25,16 @@ const deleteSale = async (req, res) => {
     return res.status(204).json(Sales);
 };
 
-module.exports = { getAllSales, findSalesById, addSale, deleteSale };
+const editSale = async (req, res) => {
+    const { saleId, productId } = req.params;
+    const { quantity } = req.body;
+  
+    const sale = await sales.editSale({
+      saleId: Number(saleId),
+      productId: Number(productId),
+      quantity,
+    });
+     res.status(200).json(sale);
+};
+
+module.exports = { getAllSales, findSalesById, addSale, deleteSale, editSale };
