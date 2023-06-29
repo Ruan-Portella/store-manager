@@ -36,4 +36,10 @@ describe('Testa a Camada Model na Rota Product', function () {
         const product = await models.addProduct('Produto Teste');
         expect(product).to.be.deep.equal(4);
     });
+
+    it('Verifica se é possível deletar um produto', async function () {
+        sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+        const product = await models.deleteProduct(1);
+        expect(product).to.be.deep.equal({ affectedRows: 1 });
+    });
 });

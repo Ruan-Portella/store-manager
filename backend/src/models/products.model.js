@@ -22,4 +22,9 @@ const editProduct = async (name, id) => {
     return insertId;
 };
 
-module.exports = { getAllProducts, findProductById, addProduct, editProduct };
+const deleteProduct = async (id) => {
+    const [result] = await connection.execute('DELETE FROM products WHERE id = ?', [id]);
+    return result;
+};
+
+module.exports = { getAllProducts, findProductById, addProduct, editProduct, deleteProduct };

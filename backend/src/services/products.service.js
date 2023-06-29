@@ -23,4 +23,11 @@ const editProduct = async (name, id) => {
     return { id, name };
 };
 
-module.exports = { getAllProducts, findProductById, addProduct, editProduct };
+const deleteProduct = async (id) => {
+    const product = await model.findProductById(id);
+    if (!product) return { message: 'Product not found' };
+    await model.deleteProduct(id);
+    return {};
+};
+
+module.exports = { getAllProducts, findProductById, addProduct, editProduct, deleteProduct };
