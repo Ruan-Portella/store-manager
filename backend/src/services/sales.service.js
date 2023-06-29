@@ -21,4 +21,12 @@ const addSale = async (itemsSold) => {
     return { id: saleId, itemsSold };
 };
 
-module.exports = { getAllSales, findSalesById, addSale };
+const deleteSale = async (id) => {
+    const Sales = await model.findSalesById(id);
+    if (Sales.length === 0) return { message: 'Sale not found' };
+    await model.deleteSale(id);
+    await model.deleteSaleTime(id);
+    return Sales;
+};
+
+module.exports = { getAllSales, findSalesById, addSale, deleteSale };
