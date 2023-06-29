@@ -18,4 +18,10 @@ const addProduct = async (req, res) => {
     return res.status(201).json(newProduct);
 };
 
-module.exports = { getAllProducts, findProductById, addProduct };
+const editProduct = async (req, res) => {
+    const product = await service.editProduct(req.body.name, Number(req.params.id));
+    if (product.message) return res.status(404).json(product);
+    return res.status(200).json(product);
+};
+
+module.exports = { getAllProducts, findProductById, addProduct, editProduct };
